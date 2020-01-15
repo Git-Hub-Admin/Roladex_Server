@@ -12,9 +12,9 @@ CREATE TABLE users (
     password varchar(255) NOT NULL,
     email varchar(255) DEFAULT NULL,
     phone varchar(16) NOT NULL,
-	emails text DEFAULT '',
-	phones text DEFAULT '',
-    addresses text DEFAULT '',
+	emails text,
+	phones text,
+    addresses text,
     c_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     m_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     is_verified TINYINT(1) DEFAULT 0,
@@ -26,7 +26,7 @@ CREATE TABLE contacts (
     user int(11) unsigned NOT NULL,
     contact int(11) unsigned NOT NULL,
 	local_id varchar(255) DEFAULT NULL,
-	status enum('requested', 'pending', 'accepted'),
+	status enum('requested', 'pending', 'accepted', 'ignored'),
 	info_shared text,
 	last_updated DATETIME DEFAULT CURRENT_TIMESTAMP,
 	meta text,
@@ -59,15 +59,16 @@ CREATE TABLE invitations (
 	c_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (inviter, invitee_phone),
 	KEY fk_invitations_inviter (inviter),
-	CONSTRAINT fk_invitations_inviter FOREIGN KEY (inviter) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_invitations_inviter FOREIGN KEY (inviter) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE updates (
 	id int(11) unsigned NOT NULL AUTO_INCREMENT,
-	user int(11) unsgined NOT NULL;
+	user int(11) unsigned NOT NULL,
 	meta text,
 	c_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
 	KEY fk_updates_user (user),
-	CONSTRAINT fk_updates_user FOREIGN KEY (user) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_updates_user FOREIGN KEY (user) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 	

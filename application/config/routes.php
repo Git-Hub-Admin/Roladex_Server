@@ -52,3 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'api';
 $route['api/(.+)'] = 'api/$1';
 $route['(.+)'] = 'api/hi_world';
+
+$route['(.+)']  = 'web/$1';
